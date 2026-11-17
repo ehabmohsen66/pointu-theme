@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/pointuofficial/public_html/wp-content/themes/pointu/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R assets inc woocommerce *.php style.css $DEPLOYPATH
