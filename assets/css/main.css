@@ -193,7 +193,7 @@ html,body{overflow-x:clip}
 .pt-custom-band .elementor-heading-title em{color:var(--pt-rose)}
 .pt-custom-band .pt-h-eyebrow .elementor-heading-title{color:var(--pt-rose)}
 .pt-custom-band .elementor-widget-text-editor{color:var(--pt-rose)}
-.pt-option{border-top:1px solid rgba(234,210,205,.35);padding-top:22px}
+.pt-option{border-top:1px solid rgba(234,210,205,.35);--padding-top:26px;padding-top:26px!important;padding-block-start:26px!important}
 .pt-option .elementor-heading-title{font-size:24px}
 .pt-option-num .elementor-heading-title{font-size:12px!important;font-weight:600;letter-spacing:.28em;color:var(--pt-rose)!important;opacity:.75}
 .pt-swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
