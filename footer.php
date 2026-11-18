@@ -28,7 +28,6 @@
 	</div>
 	<div class="pt-wrap pt-footer__bottom">
 		<span>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> POINTU. <?php esc_html_e( 'All rights reserved.', 'pointu' ); ?></span>
-		<span class="pt-pay"><?php esc_html_e( 'Cash on delivery · Whish Money · Bank transfer', 'pointu' ); ?></span>
 	</div>
 </footer>
 

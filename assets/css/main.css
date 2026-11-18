@@ -125,7 +125,7 @@ p{margin:0 0 1em}
 .pt-social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(234,210,205,.45);border-radius:50%;transition:.25s}
 .pt-social a:hover{background:var(--pt-rose);color:var(--pt-burgundy);border-color:var(--pt-rose)}
 .pt-social .pt-icon{width:19px;height:19px}
-.pt-footer__bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid rgba(234,210,205,.22);font-size:12px;letter-spacing:.08em;opacity:.85}
+.pt-footer__bottom{display:flex;justify-content:center;text-align:center;gap:20px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid rgba(234,210,205,.22);font-size:12px;letter-spacing:.08em;opacity:.85}
 
 .pt-wa-float{position:fixed;right:22px;bottom:22px;z-index:40;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#25d366;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.18);transition:transform .25s}
 .pt-wa-float:hover{transform:scale(1.07);color:#fff}
