@@ -13,8 +13,12 @@ function pointu_icon( $name ) {
 		'facebook'  => '<path fill="currentColor" d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3a21 21 0 0 0-2.3-.1c-2.3 0-3.9 1.4-3.9 4V10.4H7.8v3h2.6V21h3.1Z"/>',
 		'mail'      => '<path d="M3 6h18v12H3V6Zm0 0 9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
 		'pin'       => '<path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" fill="none" stroke="currentColor" stroke-width="1.4"/>',
-		'truck'     => '<path d="M2 6h12v10H2V6Zm12 4h4l3 3v3h-7v-6ZM6.5 19a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Zm11 0a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
-		'arrow'     => '<path d="M4 12h15m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+		'truck'         => '<path d="M2 6h12v10H2V6Zm12 4h4l3 3v3h-7v-6ZM6.5 19a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Zm11 0a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
+		'arrow'         => '<path d="M4 12h15m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+		'chevron-left'  => '<path d="M14.5 6 8.5 12l6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+		'chevron-right' => '<path d="M9.5 6 15.5 12l-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+		'pause'         => '<path d="M9 6v12M15 6v12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+		'play'          => '<path d="M8.5 6.5v11l9-5.5-9-5.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
 	);
 	return '<svg class="pt-icon pt-icon-' . esc_attr( $name ) . '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . ( $i[ $name ] ?? '' ) . '</svg>';
 }
