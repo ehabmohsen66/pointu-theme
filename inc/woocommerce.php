@@ -42,7 +42,9 @@ add_action( 'pointu_before_shop', function () {
 	} elseif ( is_search() ) {
 		$eyebrow = __( 'Search', 'pointu' );
 	}
-	echo '<section class="pt-shop-hero"><div class="pt-wrap">';
+	echo '<section class="pt-shop-hero">';
+	echo pointu_shop_collage_html( $term ); // phpcs:ignore
+	echo '<div class="pt-wrap">';
 	woocommerce_breadcrumb();
 	echo '<p class="pt-eyebrow">' . esc_html( $eyebrow ) . '</p>';
 	echo '<h1 class="pt-shop-hero__title">' . esc_html( $title ) . '</h1>';
@@ -52,6 +54,47 @@ add_action( 'pointu_before_shop', function () {
 	echo '</div></section>';
 	pointu_category_chips();
 } );
+
+/** Render a looping product photo collage for the shop hero. */
+function pointu_shop_collage_html( $term = null ) {
+	$args = array(
+		'post_type'      => 'product',
+		'post_status'    => 'publish',
+		'posts_per_page' => 10,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+		'fields'         => 'ids',
+		'meta_query'     => array( array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ) ), // phpcs:ignore
+	);
+	if ( $term instanceof WP_Term ) {
+		$args['tax_query'] = array( // phpcs:ignore
+			array(
+				'taxonomy' => $term->taxonomy,
+				'field'    => 'term_id',
+				'terms'    => $term->term_id,
+			),
+		);
+	}
+	$ids = get_posts( $args );
+	if ( count( $ids ) < 4 && isset( $args['tax_query'] ) ) {
+		unset( $args['tax_query'] );
+		$ids = get_posts( $args );
+	}
+	if ( ! $ids ) {
+		return '';
+	}
+	$items = '';
+	foreach ( $ids as $id ) {
+		$thumb = get_the_post_thumbnail( $id, 'woocommerce_thumbnail', array( 'loading' => 'eager', 'alt' => get_the_title( $id ) ) );
+		if ( $thumb ) {
+			$items .= '<a class="pt-shop-collage__item" href="' . esc_url( get_permalink( $id ) ) . '" tabindex="-1">' . $thumb . '</a>';
+		}
+	}
+	if ( ! $items ) {
+		return '';
+	}
+	return '<div class="pt-shop-collage" aria-hidden="true"><div class="pt-shop-collage__track">' . $items . $items . '</div></div>';
+}
 
 /** Category pills: children of current category, or top level on the main shop. */
 function pointu_category_chips() {
