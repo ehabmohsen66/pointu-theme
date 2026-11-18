@@ -60,7 +60,7 @@ function pointu_shop_collage_html( $term = null ) {
 	$args = array(
 		'post_type'      => 'product',
 		'post_status'    => 'publish',
-		'posts_per_page' => 10,
+		'posts_per_page' => 12,
 		'orderby'        => 'date',
 		'order'          => 'DESC',
 		'fields'         => 'ids',
@@ -69,31 +69,52 @@ function pointu_shop_collage_html( $term = null ) {
 	if ( $term instanceof WP_Term ) {
 		$args['tax_query'] = array( // phpcs:ignore
 			array(
-				'taxonomy' => $term->taxonomy,
-				'field'    => 'term_id',
-				'terms'    => $term->term_id,
+				'taxonomy'         => $term->taxonomy,
+				'field'            => 'term_id',
+				'terms'            => $term->term_id,
+				'include_children' => true,
 			),
 		);
 	}
 	$ids = get_posts( $args );
-	if ( count( $ids ) < 4 && isset( $args['tax_query'] ) ) {
-		unset( $args['tax_query'] );
-		$ids = get_posts( $args );
-	}
 	if ( ! $ids ) {
 		return '';
 	}
-	$items = '';
+	$tiles = array();
 	foreach ( $ids as $id ) {
-		$thumb = get_the_post_thumbnail( $id, 'woocommerce_thumbnail', array( 'loading' => 'eager', 'alt' => get_the_title( $id ) ) );
+		$url   = get_permalink( $id );
+		$title = get_the_title( $id );
+		$thumb = get_the_post_thumbnail( $id, 'woocommerce_thumbnail', array( 'loading' => 'eager', 'alt' => $title ) );
 		if ( $thumb ) {
-			$items .= '<a class="pt-shop-collage__item" href="' . esc_url( get_permalink( $id ) ) . '" tabindex="-1">' . $thumb . '</a>';
+			$tiles[] = '<a class="pt-shop-collage__item" href="' . esc_url( $url ) . '" tabindex="-1">' . $thumb . '</a>';
 		}
 	}
-	if ( ! $items ) {
+	// If this section has few products, include their gallery photos so it stays rich without mixing categories.
+	if ( count( $tiles ) < 8 ) {
+		foreach ( $ids as $id ) {
+			$url     = get_permalink( $id );
+			$title   = get_the_title( $id );
+			$gallery = get_post_meta( $id, '_product_image_gallery', true );
+			if ( ! $gallery ) {
+				continue;
+			}
+			foreach ( array_filter( array_map( 'absint', explode( ',', $gallery ) ) ) as $img_id ) {
+				$img = wp_get_attachment_image( $img_id, 'woocommerce_thumbnail', false, array( 'loading' => 'eager', 'alt' => $title ) );
+				if ( $img ) {
+					$tiles[] = '<a class="pt-shop-collage__item" href="' . esc_url( $url ) . '" tabindex="-1">' . $img . '</a>';
+				}
+				if ( count( $tiles ) >= 10 ) {
+					break 2;
+				}
+			}
+		}
+	}
+	if ( ! $tiles ) {
 		return '';
 	}
-	return '<div class="pt-shop-collage" aria-hidden="true"><div class="pt-shop-collage__track">' . $items . $items . '</div></div>';
+	$base = implode( '', $tiles );
+	$half = str_repeat( $base, max( 1, (int) ceil( 12 / count( $tiles ) ) ) );
+	return '<div class="pt-shop-collage" aria-hidden="true"><div class="pt-shop-collage__track">' . $half . $half . '</div></div>';
 }
 
 /** Category pills: children of current category, or top level on the main shop. */
