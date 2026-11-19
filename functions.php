@@ -4,7 +4,7 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-define( 'POINTU_VER', '1.0.14' );
+define( 'POINTU_VER', '1.0.15' );
 define( 'POINTU_DIR', get_template_directory() );
 define( 'POINTU_URI', get_template_directory_uri() );
 

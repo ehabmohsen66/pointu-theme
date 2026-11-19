@@ -210,6 +210,7 @@ function pointu_hero_slider_html( $atts = array(), $fallback_html = '' ) {
 		'tag'      => '',
 		'ids'      => '',
 		'autoplay' => 5000,
+		'badge'    => __( 'New Arrival', 'pointu' ),
 	), $atts );
 
 	pointu_hero_slider_rendered( true );
@@ -223,10 +224,14 @@ function pointu_hero_slider_html( $atts = array(), $fallback_html = '' ) {
 		return '<div class="pt-hero-slider pt-hero-slider--empty"><div class="pt-hero-slider__card pt-hero-slider__empty"><p class="pt-eyebrow">' . esc_html__( 'The collection', 'pointu' ) . '</p><p class="pt-hero-slider__empty-title">' . esc_html__( 'New pieces arriving soon.', 'pointu' ) . '</p><a class="pt-btn" href="' . esc_url( $shop_url ) . '">' . esc_html__( 'Browse the shop', 'pointu' ) . '</a></div></div>';
 	}
 
-	$total    = count( $products );
-	$autoplay = max( 0, (int) $a['autoplay'] );
-	$slides   = '';
-	$segments = '';
+	$total      = count( $products );
+	$autoplay   = max( 0, (int) $a['autoplay'] );
+	$badge_text = trim( (string) $a['badge'] );
+	$badge_html = $badge_text
+		? '<span class="pt-badge pt-badge--new pt-hero-slider__badge">' . esc_html( $badge_text ) . '</span>'
+		: '';
+	$slides     = '';
+	$segments   = '';
 
 	foreach ( $products as $idx => $p ) {
 		$is_first = ( 0 === $idx );
@@ -255,13 +260,14 @@ function pointu_hero_slider_html( $atts = array(), $fallback_html = '' ) {
 		);
 
 		$slides .= sprintf(
-			'<div class="pt-hero-slider__slide%1$s" data-slide="%2$d" role="group" aria-roledescription="slide" aria-label="%3$s" aria-hidden="%4$s"><a class="pt-hero-slider__link" href="%5$s" tabindex="%6$s"><div class="pt-hero-slider__media">%7$s</div><div class="pt-hero-slider__info">%8$s<span class="pt-hero-slider__title">%9$s</span>%10$s</div></a></div>',
+			'<div class="pt-hero-slider__slide%1$s" data-slide="%2$d" role="group" aria-roledescription="slide" aria-label="%3$s" aria-hidden="%4$s"><a class="pt-hero-slider__link" href="%5$s" tabindex="%6$s"><div class="pt-hero-slider__media">%7$s%8$s</div><div class="pt-hero-slider__info">%9$s<span class="pt-hero-slider__title">%10$s</span>%11$s</div></a></div>',
 			$is_first ? ' is-active' : '',
 			$idx,
 			esc_attr( $slide_label ),
 			$is_first ? 'false' : 'true',
 			esc_url( $url ),
 			$is_first ? '0' : '-1',
+			$badge_html,
 			$img,
 			$meta ? '<span class="pt-hero-slider__meta">' . esc_html( $meta ) . '</span>' : '',
 			esc_html( $title ),
